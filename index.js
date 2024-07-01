@@ -32,7 +32,7 @@ app.use(express.static("Public"));
 app.use(bodyParser.json());
 
 app.get("/",(req,res)=>{
-    res.render("home.ejs");
+    res.render("Home.ejs");
 });
 
 app.post("/search",async(req,res)=>{
