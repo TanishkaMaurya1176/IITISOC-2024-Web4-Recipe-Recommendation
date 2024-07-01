@@ -26,13 +26,15 @@ const db = new pg.Client({
     }
   });
 
+  app.set('view engine', 'ejs');
+  app.set('views','./Views');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("Public"));
 app.use(bodyParser.json());
 
 app.get("/",(req,res)=>{
-    res.render("Home.ejs");
+    res.render('Home');
 });
 
 app.post("/search",async(req,res)=>{
@@ -43,7 +45,7 @@ const result=await db.query(
    [input.toLowerCase()]
 );
 const items = result.rows;
-res.render("recipes.ejs",{
+res.render('recipes',{
     listitems:items
 });
 }
@@ -60,7 +62,7 @@ app.post("/GetRecipes",async(req,res)=>{
        [name.toLowerCase()]
     );
     const items = result.rows;
-    res.render("recipes.ejs",{
+    res.render('recipes',{
         listitems:items
     });
 }catch(err){
@@ -74,7 +76,7 @@ app.post("/allRecipes",async(req,res)=>{
        " SELECT id,title,ingredients,instructions FROM recipes;",
     );
     const items = result.rows;
-    res.render("recipes.ejs",{
+    res.render('recipes',{
         listitems:items
     });
 }catch(err){
@@ -96,7 +98,7 @@ app.post("/view_Recipe",async(req,res)=>{
             const isLiked = wishlistResult.rowCount > 0; 
             const inCart = cartResult.rowCount > 0; 
         
-            res.render("SingleRecipe.ejs",
+            res.render('SingleRecipe',
                 {
                     recipes: { ...item, is_liked: isLiked, in_Cart: inCart}
                 }
@@ -127,7 +129,7 @@ try{
     try{
     const result = await db.query("SELECT * FROM saved INNER JOIN recipes ON saved.recipe_id = recipes.id;");
     const recipes = result.rows;
-    res.render("Wishlist.ejs", { saved_recipes: recipes });
+    res.render('Wishlist', { saved_recipes: recipes });
     }
     catch(err){
         console.log(err);
@@ -153,7 +155,7 @@ try{
     try{
     const result = await db.query("SELECT * FROM cart INNER JOIN recipes ON cart.recipe_id = recipes.id;");
     const recipes = result.rows;
-    res.render("Cart.ejs", { cart_recipes: recipes });
+    res.render('Cart', { cart_recipes: recipes });
     }catch(err){
         console.log(err);
     }
