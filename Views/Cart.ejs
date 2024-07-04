@@ -7,42 +7,96 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
           *{
         box-sizing: border-box;
         margin: 0;
         
      }
-   .container{
+     .container1{
    display: grid;
    grid-template-columns: repeat(3,1fr);
+   grid-auto-rows: 1fr;
    gap: 20px;
-   
    }
    .item{
     border: 2px solid black;
     padding: 10px;
     background-color: white;
+    display: grid;
+    grid-template-rows: 1fr 0.8fr;
    }
-   .view{
-    color: white;
-    background-color: black;
-    padding: 5px;
-    border: none;
-    font-size: 20px;
+   .title{
+    background-color:burlywood ;
+   margin-bottom: 15px;
+   text-align: center;
    }
-   .view:hover{
-    background-color:#A0522D ;
-    color: white;
-   }
+.btn{
+    display: flex;
+            justify-content: center;
+            align-items: center;
+}
+   .btn-1 {
+  width: 130px;
+  height: 50px;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  outline: none;
+  background:#A0522D;
+  border: none;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+ 
+}
+.btn-1:after {
+    position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  background-color: black;
+  border-radius: 5px;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  transition: all 0.3s ease;
+}
+.btn-1:hover {
+  color: #fff;
+}
+.btn-1:hover:after {
+  left: 0;
+  width: 100%;
+}
+.btn-1:active {
+  top: 2px;
+}
 
-   h3{
+   h2{
     background-color: white;
    }
-  
+   
    h1{
     text-align: center;
+    background-color: #A0522D;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #f1f1f1;
+    padding: 15px;
    }
-
 
    .header {
 padding: 20px 10px;
@@ -122,6 +176,30 @@ display: table;
 a{
 text-decoration: none;
 }
+@media screen and (max-width: 550px) {
+    .links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Align the items to the start of the flex container */
+        gap: 7px; /* Add some space between the elements */
+        float: left;
+    }
+    .header{
+        padding-top: 8px;
+    }
+    .header a{
+       margin-left:-0.5%;
+    } 
+    .container1{
+   grid-template-columns: repeat(2,1fr);
+   
+   }
+}
+@media screen and (max-width: 360px) {
+    .container1{
+   grid-template-columns: repeat(1,1fr);
+   } 
+}
     </style>
 </head>
 <body>
@@ -142,13 +220,15 @@ text-decoration: none;
     </div> 
 </div>
     <h1> CART RECIPES</h1>
-<div class="container">
+<div class="container1">
     <%  cart_recipes.forEach(recipe => {     %>
         <div class="item">
-        <h3><%= recipe.title %></h3>
+        <h2 class="title"><%= recipe.title %></h2>
+        <div class="btn">
         <form action="/view_Recipe" method="post">
-            <button type="submit" name="viewid" value="<%=recipe.id%>" class="view">View Recipe</button>
+            <button type="submit" name="viewid" value="<%=recipe.id%>" class="btn-1">View Recipe</button>
         </form>
+    </div>
     </div>
       <% }); %>
     </div>
