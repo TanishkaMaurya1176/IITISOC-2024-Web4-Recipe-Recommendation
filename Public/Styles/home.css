@@ -354,12 +354,12 @@ li input:hover{
        margin-left:-0.5%;
     }
     .content2 {
-        height: 350px;
+        height: 280px;
      }
     .content2 h3,.content2 p {
-        
-        font-size: 10px;
+        font-size: 8px;
      }
+     
      #SPAN::before{
         content: "\a";
         white-space: pre;
@@ -392,6 +392,9 @@ li input:hover{
     display: flex;
     gap:20px;
     overflow: auto;
+    }
+    #design{
+        font-size: 20px;
     }
 
 }  
