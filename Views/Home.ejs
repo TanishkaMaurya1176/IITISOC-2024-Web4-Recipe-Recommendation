@@ -6,15 +6,17 @@
     <title>Recipe Recommendation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-
    <link rel="stylesheet" href="Styles/home.css">
 </head>
 <body>
     <div class="container">
        <div class="header">
         <div class="logo"></div>
-        <div class="links">
+        <div class="links">   
             <a href="/">Home</a>
+            <form action="/logIN" method="get">
+                <button type="submit" value="Sign Up" class="submit">Sign Up</button>
+            </form>
             <form action="/wishlist" method="post">
                 <button type="submit" value="Wishlist" class="submit">Wishlist</button>
             </form>
@@ -26,7 +28,7 @@
                 <button type="submit"><i class="fa fa-search"></i></button>
     </form>
     </div> 
-</div>
+  </div>
     <main>
         <div class="content">
         <p id="design">WHAT TO COOK TODAY</p>
@@ -36,7 +38,7 @@
           <form action="/allRecipes" method="post">
             <img src="Images/AllRecipes.jpeg" alt="" id="one">
            <input type="submit" name="getrecipe" value="All Recipes" id="content" class="c5"> 
-        </form>   
+        </form> 
            <form action="/GetRecipes" method="post">
                 <img src="Images/Food1.jpg" alt="" id="one">
            <input type="submit" name="getrecipe" value="Quick And Easy"  id="content" class="c1" >      
@@ -133,6 +135,14 @@
     </main>
    
     <div class="footer">
+      <div class="icons">
+        <p class="follow"><strong style="letter-spacing: 1px;">FOLLOW US FOR MORE UPDATES</strong></p>
+        <i class="fa fa-instagram icon" data-tooltip="Instagram"></i>
+        <i class="fa fa-pinterest icon"data-tooltip="Pinterest"></i>
+        <i class="fa fa-youtube-play icon"data-tooltip="YouTube"></i>
+        <i class="fa fa-facebook icon"data-tooltip="Facebook"></i>
+        <i class="fa fa-linkedin icon"data-tooltip="LinkedIn"></i>
+      </div>
       <ul>
           <li><strong>FOOD & RECIPES</strong></li>
           <li>
@@ -162,8 +172,11 @@
             <input type="submit" name="getrecipe" value="SALADS">
           </form></li>
       </ul>
-      <p id="copyright">&copy;Copyright<%= new Date().getFullYear() %></p>
+      <p id="copyright">&copy;Copyright<%= new Date().getFullYear() %>All Rights reserved.</p>
   </div>
   </div>
+  <script>
+   
+  </script>
   </body>
   </html>

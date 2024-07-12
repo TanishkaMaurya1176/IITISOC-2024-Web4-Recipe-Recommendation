@@ -235,5 +235,8 @@ text-decoration: none;
     </div>
       <% }); %>
     </div>
+    <% if (!locals.saved_recipes || locals.saved_recipes.length === 0) { %>
+        <h4 style="font-size: 30px;text-align: center;">Save to view your wishlist</h4>
+    <% }%>
 </body>
 </html>

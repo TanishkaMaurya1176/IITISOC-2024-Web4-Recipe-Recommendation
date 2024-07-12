@@ -17,16 +17,19 @@
             text-align: center;
             letter-spacing: 1px;
             width: 40%;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+            margin: auto auto;
             padding: 10px;
         }
-        .icon,h1,h2,h3,ul, p,i{
+        .icon,h1,h2,h3,ul,li, p,i{
             background-color: white;
+        }
+        ul{
+            list-style: none;
         } 
+        li{
+            text-align: center;
+            margin-left: -25px;
+        }
         .icon{
            display: flex;
            justify-content: center;
@@ -36,6 +39,10 @@
         }
        .fa{
         font-size: 20px;
+        cursor: pointer;
+       }
+       button{
+        cursor: pointer;
        }
        @media screen and (max-width:770px){
         h1{
@@ -72,20 +79,29 @@
             width: 80%;
             word-spacing: 4px;
         }
+        li{
+            font-size: 12px;
+        }
        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>
+        <h1 style="text-decoration: underline;">
             <%= recipes.title %>
         </h1>
         <h2>Ingredients</h2>
-        <p> <%= recipes.ingredients %> </p>
+        <ul>
+            <% recipes.ingredients.forEach(function(ingredient) { %>
+              <li><%= ingredient %></li>
+            <% }); %>
+          </ul>
         <h3>---INSTRUCTIONS---</h3>
-        <p>
-           <%= recipes.instructions %>
-        </p>
+        <ul>
+            <% recipes.instructions.forEach(function(instruction) { %>
+              <li><%= instruction %></li>
+            <% }); %>
+          </ul>
        
         <div class="icon">      
            <i class="fa fa-heart like-button" data-id="<%=recipes.id%>"style="color: <%= recipes.is_liked ? 'red' : 'black' %>;"></i>
