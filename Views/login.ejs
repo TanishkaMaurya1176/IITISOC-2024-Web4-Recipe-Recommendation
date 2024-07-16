@@ -60,7 +60,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;  
+            align-items: center;
+            text-align: center;  
         }
         .btn-field button {
             padding: 10px 20px;
@@ -99,7 +100,10 @@
             .input-field input{
                 margin: 3px 0;
             }
-
+            a::before{
+            content: "\a";
+            white-space: pre;
+        } 
         }
 </style>
 <body>
@@ -139,7 +143,7 @@
                 </div>
                 <div class="btn-field">
                     <button type="submit" >Sign Up</button>
-                   <p >Already have an account?<a id="signinBtn" href="#" onclick="signin(event)">SignIn</a></p>
+                   <p>Already have an account?<a id="signinBtn" href="#" onclick="signin(event)">SignIn</a></p>
                 </div>
             </form>
         </div>
