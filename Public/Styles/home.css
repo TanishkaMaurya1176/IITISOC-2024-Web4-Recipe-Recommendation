@@ -20,7 +20,7 @@ padding: 20px 10px;
 background-image: url("/Images/istockphoto-1307964333-612x612.jpg");
 height: 200px;
 }
-.header a {
+.links a {
 float: left;
 background-color: #A0522D;
 color: rgb(255, 255, 255);
@@ -34,7 +34,7 @@ font-weight: 400;
 font-style: normal;
 margin: auto;
 }
-.header a:hover {
+.links a:hover {
 color: white;
 background-color: black;
 }
@@ -290,6 +290,56 @@ li input:hover{
     color: black;
 
 }
+.mobile-view {
+    flex-direction: column;
+    align-items: center;
+    background-color:#A0522D;
+    padding: 10px;
+    margin-top: -5px;
+    transition: max-height 0.5s ease;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.mobile-view a,
+.mobile-view form {
+    width: 100%;
+    text-align: center;
+   margin: 2px 0;
+}
+.mobile-view a,
+.mobile-view form:hover{
+background-color: #A0522D;
+color: #f1f1f1;
+}
+.mobile-view a {
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    font-size:13.3333px ;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.mobile-view form button {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    margin: 10px;
+}
+.search-bar{
+    display: none;
+}
 
   @media screen and (max-width: 1176px) {
     .content2 {
@@ -450,6 +500,21 @@ li input:hover{
     }
     .follow{
         font-size: 15px;
-    }   
+    } 
+    .links{
+        display: none;
     }
-
+    .hamburger {
+        display: flex;
+    }
+    .mobile-view{
+       
+        max-height: 175px;
+    }
+    .search-bar{
+        display: block;
+        background-color: #A0522D;
+        margin-top: 10px;
+        margin-bottom: -10px;
+    }
+    }

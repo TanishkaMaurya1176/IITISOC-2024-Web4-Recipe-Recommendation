@@ -181,11 +181,7 @@ text-decoration: none;
     }
     .header a{
        margin-left:-0.5%;
-    } 
-    .container1{
-   grid-template-columns: repeat(2,1fr);
-   
-   }
+    }
    h1{
     font-size: 18px;
    }
@@ -215,10 +211,9 @@ text-decoration: none;
             <form class="example" action="/search" method="post">  
                 <input type="text" placeholder="Search for Recipes" name="search">
                 <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
+        </form>
     </div> 
 </div>
-
   <div class="container1">
     <% if (locals.listitems){ %>
     <% listitems.forEach((item) => {    %>

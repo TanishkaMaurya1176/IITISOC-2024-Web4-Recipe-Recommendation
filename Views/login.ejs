@@ -4,17 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
+<style>
+    *{
+       margin: 0;
+       box-sizing: border-box;
+    }
+    .container{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url("Images/Food.jpg");
+    background-size: cover;
+    background-position: center; 
+    }
+    #title{
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .form-box1,.form-box2 {   
+        background-image: url("Images/Food.jpg");
+        background-size: cover;
+        background-position: center; 
+            border-radius: 50%;
+            border: 2px solid black;
+            padding: 50px;
+            margin: auto auto;
+            width: 450px;
+            height: 450px;
+        }
+        .image img{
+            height: 75%;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-field {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .input-field i {
+            margin-right: 10px;
+        }
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .btn-field {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;  
+        }
+        .btn-field button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer; 
+            margin-bottom: 15px;   
+        }
+        a:hover{
+            color: black;
+        }
+        @media screen and (max-width: 550px){
+            .form-box1,.form-box2{
+                width: 350px;
+                height: 350px;
+            }
+            #title{
+                margin-bottom: 15px;
+            }
+
+            .btn-field button{
+                margin-bottom: 5px;
+            }
+        }
+        @media screen and (max-width: 360px){
+            .form-box1,.form-box2{
+                width: 300px;
+                height: 300px;
+            }
+            
+            #title{
+                margin-bottom: 10px;
+            }
+            .input-field input{
+                margin: 3px 0;
+            }
+
+        }
+</style>
 <body>
-    <form action="/login" method="post">
-        <input type="email" name="email"  id="email" placeholder="email">
-        <input type="password" name="password"  id="password" placeholder="password">
-<button type="submit">Submit</button>
-    </form>
-    <form action="/register" method="post">
-        <input type="email" name="email"  id="email" placeholder="email">
-        <input type="password" name="password"  id="password" placeholder="password">
-        <button type="submit">Submit</button>
-    </form>
+    <div class="container">
+        
+        <div id="In" class="form-box1 ">
+            <h1 id="title" style="color: green;">Sign In</h1>
+            <form action="/login" method="post">
+                <div class="input-group">
+                    <div class="input-field">
+                     <i class="fa fa-envelope"></i>
+                     <input type="email" name="email" id="email" placeholder="E-mail" required>
+                    </div>
+                    <div class="input-field">
+                     <i class="fa fa-lock"></i>
+                     <input type="password" name="password" id="password" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="btn-field">
+                    <button type="submit" >Sign In</button>
+                    <p >Don't have an account?<a id="signupBtn" href="#" onclick="signup(event)">Signup</a></p>
+                </div>
+            </form>
+        </div>
+        <div id="Up" class="form-box2" style="display: none;">
+            <h1 id="title"style="color: green;" >Sign Up</h1>
+            <form action="/register" method="post">
+                <div class="input-group">
+                    <div class="input-field">
+                     <i class="fa fa-envelope"></i>
+                     <input type="email" name="email" id="email" placeholder="E-mail" required>
+                    </div>
+                    <div class="input-field">
+                     <i class="fa fa-lock"></i>
+                     <input type="password" name="password" id="password" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="btn-field">
+                    <button type="submit" >Sign Up</button>
+                   <p >Already have an account?<a id="signinBtn" href="#" onclick="signin(event)">SignIn</a></p>
+                </div>
+            </form>
+        </div>
+</div>
+<script>
+   let signupBtn = document.getElementById("signupBtn");
+        let signinBtn = document.getElementById("signinBtn");
+        let In = document.getElementsByClassName("form-box2");
+        let Up = document.getElementsByClassName("form-box1");
+        let authForm = document.getElementById("authForm");
+        function signup(event) {
+            event.preventDefault();
+            document.getElementById("In").style.display = "none";
+            document.getElementById("Up").style.display = "block";
+        }
+
+        function signin(event) {
+            event.preventDefault();
+            document.getElementById("Up").style.display = "none";
+            document.getElementById("In").style.display = "block";
+        }
+    
+</script>
 </body>
 </html>

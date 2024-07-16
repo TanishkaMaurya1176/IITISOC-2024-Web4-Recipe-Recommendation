@@ -28,8 +28,28 @@
                 <button type="submit"><i class="fa fa-search"></i></button>
     </form>
     </div> 
+    <div class="hamburger" onclick="toggleMenu()"><i class="fa fa-bars"></i></div>
+  <div style="display: none;" class="mobile-view" id="mobileMenu">
+      <a href="/">Home</a>
+      <form action="/logIN" method="get">
+          <button type="submit" class="navbar">Sign Up</button>
+      </form>
+      <form action="/wishlist" method="post">
+          <button type="submit" class="navbar">Wishlist</button>
+      </form>
+      <form action="/cart" method="post">
+          <button type="submit" class="navbar">Shopping List</button>
+      </form>
   </div>
+ 
+</div>
     <main>
+      <div class="search-bar">
+        <form class="example" action="/search" method="post">  
+          <input type="text" placeholder="Search for Recipes" name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+      </div>
         <div class="content">
         <p id="design">WHAT TO COOK TODAY</p>
         </div>
@@ -176,7 +196,14 @@
   </div>
   </div>
   <script>
-   
-  </script>
+    function toggleMenu() {
+            var menu = document.getElementById('mobileMenu');
+            if (menu.style.display==="none") {      
+                menu.style.display = 'flex';          
+            } else {
+                menu.style.display="none";
+            }
+        }
+</script>
   </body>
   </html>
