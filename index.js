@@ -168,6 +168,7 @@ app.post("/allRecipes",async(req,res)=>{
 
 app.post("/view_Recipe", isAuthenticated,async(req,res)=>{
     const id= req.body.viewid;
+    const isShared = req.query.shared === 'false';
     try {
         const result=await db.query("SELECT id,title,ingredients,instructions FROM recipes WHERE id=$1;",
             [id]
@@ -181,7 +182,7 @@ app.post("/view_Recipe", isAuthenticated,async(req,res)=>{
         
             res.render('SingleRecipe',
                 {
-                    recipes: { ...item, is_liked: isLiked, in_Cart: inCart}
+                    recipes: { ...item, is_liked: isLiked, in_Cart: inCart},isShared
                 }
             );
     } catch (err) {
@@ -245,6 +246,7 @@ try{
 
   app.get('/view_Recipe', async function(req, res) {
     const recipeId = req.query.id;
+    const isShared = req.query.shared === 'true';
     if (!recipeId) {
         return res.redirect('/');
     }
@@ -254,14 +256,14 @@ try{
         if (!item) {
             return res.status(404).send("Recipe not found");
         }
-        const isLiked = req.session.user ? (await db.query("SELECT * FROM saved WHERE recipe_id = $1 AND user_id = $2;", [recipeId, req.session.user.id])).rowCount > 0 : false;
-        const inCart = req.session.user ? (await db.query("SELECT * FROM cart WHERE recipe_id = $1 AND user_id = $2;", [recipeId, req.session.user.id])).rowCount > 0 : false;
-            res.render('SingleRecipe', { recipes: { ...item, is_liked: isLiked, in_Cart: inCart } });
+        res.render('SingleRecipe', {
+            recipes: { ...item, is_liked: false, in_Cart: false },
+            isShared
+        });
     } catch (err) {
         console.log(err);
         res.status(500).send("Internal Server Error");
-    }
-    
+    }   
 });
 
 app.listen(port,()=>{

@@ -102,7 +102,7 @@
               <li><%= instruction %></li>
             <% }); %>
           </ul>
-       
+          <% if (!isShared) { %>
         <div class="icon" id="<%= recipes.id %>">      
            <i class="fa fa-heart like-button" data-id="<%=recipes.id%>"style="color: <%= recipes.is_liked ? 'red' : 'black' %>;"></i>
            <i onclick="shareToWhatsApp(id)" class="fa fa-whatsapp" id="<%= recipes.id %>"></i>
@@ -113,6 +113,7 @@
         <div class="icon" >
           <button class="cart-button" type="submit" data-id="<%=recipes.id%>"><%= recipes.in_Cart ? 'Added To Cart':'Add To Cart' %></button>
         </div>
+        <% } %>
     </div>
 </body>
  <script>
@@ -120,25 +121,25 @@
         const recipeTitle = document.title;
         const recipeDescription = "Check out this amazing recipe!"; 
         function shareToWhatsApp(recipeId) {
-            const message = encodeURIComponent(`${recipeDescription} ${recipeLink}?id=${recipeId}`);
+            const message = encodeURIComponent(`${recipeDescription} ${recipeLink}?id=${recipeId}&shared=true`);
             const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
             window.open(whatsappUrl, '_blank');
         }
 
         function shareToFacebook(recipeId) {
-            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(recipeLink+ '?id=' + recipeId)}`;
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(recipeLink+ '?id=' + recipeId+ '&shared=true')}`;
             window.open(facebookUrl, '_blank');
         }
 
         function shareToEmail(recipeId) {
             const subject = encodeURIComponent(recipeTitle);
-            const body = encodeURIComponent(`${recipeDescription}\n\n${recipeLink}?id=${recipeId}`);
+            const body = encodeURIComponent(`${recipeDescription}\n\n${recipeLink}?id=${recipeId}&shared=true`);
             const emailUrl = `mailto:?subject=${subject}&body=${body}`;
             window.open(emailUrl, '_self');
         }
 
         function shareToPinterest(recipeId) {
-            const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(recipeLink+ '?id=' + recipeId)}&description=${encodeURIComponent(recipeDescription)}`;
+            const pinterestUrl = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(recipeLink+ '?id=' + recipeId+'&shared=true')}&description=${encodeURIComponent(recipeDescription)}`;
             window.open(pinterestUrl, '_blank');
         }
 
