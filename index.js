@@ -243,6 +243,26 @@ try{
     }
   });
 
+  app.get('/view_Recipe', async function(req, res) {
+    const recipeId = req.query.id;
+    if (!recipeId) {
+        return res.redirect('/');
+    }
+    try {
+        const result = await db.query("SELECT id, title, ingredients, instructions FROM recipes WHERE id=$1;", [recipeId]);
+        const item = result.rows[0];
+        if (!item) {
+            return res.status(404).send("Recipe not found");
+        }
+        const isLiked = req.session.user ? (await db.query("SELECT * FROM saved WHERE recipe_id = $1 AND user_id = $2;", [recipeId, req.session.user.id])).rowCount > 0 : false;
+        const inCart = req.session.user ? (await db.query("SELECT * FROM cart WHERE recipe_id = $1 AND user_id = $2;", [recipeId, req.session.user.id])).rowCount > 0 : false;
+            res.render('SingleRecipe', { recipes: { ...item, is_liked: isLiked, in_Cart: inCart } });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Internal Server Error");
+    }
+    
+});
 
 app.listen(port,()=>{
     console.log(`Server running on port ${port}`);
