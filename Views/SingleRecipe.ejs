@@ -43,7 +43,18 @@
        }
        button{
         cursor: pointer;
+        border: none;
+        padding: 5px;
        }
+       .like-button {
+    transition: color 0.3s ease;
+}
+.cart-button:hover{
+    text-decoration: underline;
+}
+.fa:hover{
+color: gray;
+}
        @media screen and (max-width:770px){
         h1{
             font-size: 20px;
@@ -90,7 +101,7 @@
         <h1 style="text-decoration: underline;">
             <%= recipes.title %>
         </h1>
-        <h2>Ingredients</h2>
+        <h2>---Ingredients---</h2>
         <ul>
             <% recipes.ingredients.forEach(function(ingredient) { %>
               <li><%= ingredient %></li>
@@ -105,7 +116,7 @@
           <% if (!isShared) { %>
         <div class="icon" id="<%= recipes.id %>">      
            <i class="fa fa-heart like-button" data-id="<%=recipes.id%>"style="color: <%= recipes.is_liked ? 'red' : 'black' %>;"></i>
-           <i onclick="shareToWhatsApp(id)" class="fa fa-whatsapp" id="<%= recipes.id %>"></i>
+           <i onclick="shareToWhatsApp(id)" class="fa fa-whatsapp" id="<%= recipes.id %>" ></i>
            <i onclick="shareToFacebook(id)" class="fa fa-facebook" id="<%= recipes.id %>"></i>
            <i onclick="shareToPinterest(id)" class="fa fa-pinterest-p" id="<%= recipes.id %>"></i>
            <i onclick="shareToEmail(id)" class="fa fa-envelope-o" id="<%= recipes.id %>"></i>

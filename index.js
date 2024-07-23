@@ -10,8 +10,6 @@ const app= express();
 const port=process.env.PORT ||3000;
 const saltRounds=5;
 
-//Try Level 2 authentication first 
-
 const db = new pg.Client({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -123,7 +121,7 @@ app.post("/search",async(req,res)=>{
 const input=req.body.search;
 try{
 const result=await db.query(
-   " SELECT id,title,ingredients,instructions FROM recipes WHERE LOWER(tags) LIKE '%'|| $1 ||'%';",
+   " SELECT * FROM recipes WHERE LOWER(tags) LIKE '%'|| $1 ||'%';",
    [input.toLowerCase()]
 );
 const items = result.rows;
@@ -140,7 +138,7 @@ app.post("/GetRecipes",async(req,res)=>{
     const name=req.body.getrecipe;
     try{
     const result=await db.query(
-       " SELECT id,title,ingredients,instructions FROM recipes WHERE LOWER(tags) LIKE '%'|| $1 ||'%';",
+       " SELECT * FROM recipes WHERE LOWER(tags) LIKE '%'|| $1 ||'%';",
        [name.toLowerCase()]
     );
     const items = result.rows;
@@ -155,7 +153,7 @@ app.post("/GetRecipes",async(req,res)=>{
 app.post("/allRecipes",async(req,res)=>{
     try{
     const result=await db.query(
-       " SELECT id,title,ingredients,instructions FROM recipes;",
+       " SELECT * FROM recipes;",
     );
     const items = result.rows;
     res.render('recipes',{
@@ -170,7 +168,7 @@ app.post("/view_Recipe", isAuthenticated,async(req,res)=>{
     const id= req.body.viewid;
     const isShared = req.query.shared === 'false';
     try {
-        const result=await db.query("SELECT id,title,ingredients,instructions FROM recipes WHERE id=$1;",
+        const result=await db.query("SELECT * FROM recipes WHERE id=$1;",
             [id]
         );
             const item=result.rows[0];
@@ -251,7 +249,7 @@ try{
         return res.redirect('/');
     }
     try {
-        const result = await db.query("SELECT id, title, ingredients, instructions FROM recipes WHERE id=$1;", [recipeId]);
+        const result = await db.query("SELECT * FROM recipes WHERE id=$1;", [recipeId]);
         const item = result.rows[0];
         if (!item) {
             return res.status(404).send("Recipe not found");
