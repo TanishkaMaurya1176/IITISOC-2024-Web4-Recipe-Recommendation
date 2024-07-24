@@ -1,8 +1,15 @@
 
 # Recipe Recommendation Engine
 
-This project is a recipe recommendation program built with a combination of HTML, CSS, JavaScript, and EJS templates for the frontend. The backend is powered by Node.js and Express, along with several other essential packages.
+This project is a recipe recommendation program built with a combination of HTML, CSS, JavaScript, and EJS templates for the frontend. The backend is powered by Node.js , Express, pg , body-parser, dotenv, bcrypt and express-session.
 
+## Website
+
+Link for the deployed version of website 
+
+```bash
+  https://iitisoc-2024-web4-recipe-recommendation.onrender.com
+```
 
 
 ## Features
@@ -141,13 +148,6 @@ npm start
 ```
 6. Open your browser and navigate to http://localhost:3000 to view the application.
     
-## Deployment
-
-To deploy this project run
-
-```bash
-  https://iitisoc-2024-web4-recipe-recommendation.onrender.com
-```
 
 ## API Reference
 
