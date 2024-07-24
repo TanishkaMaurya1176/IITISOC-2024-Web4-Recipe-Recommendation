@@ -93,6 +93,16 @@ IITISOC-2024-Web4-Recipe-Recommendation
 
 - **express-session:** Middleware to manage user sessions.
 
+ ## Screenshots
+
+#### Mobile view
+
+<img src="https://github.com/user-attachments/assets/07bf5758-0e4a-4a28-a946-cebd1038bd58" alt="Mobile-view" width="300" height="700"/>
+
+
+#### Desktop view
+
+<img width="1440" alt="Desktop view" src="https://github.com/user-attachments/assets/379d523a-c30e-45a2-bfbd-68f0e73ecbbf">
 
 ## Installation
 
@@ -173,6 +183,9 @@ To deploy this project run
 | :-------- | :-------------------------------- |
 | `email`      | **Required**. Fetches the email of the user.|
 | `password`      | **Required**. Fetches the password of the user. |
+
+
+
 
 
 
