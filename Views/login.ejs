@@ -111,6 +111,10 @@
         
         <div id="In" class="form-box1 ">
             <h1 id="title" style="color: green;">Sign In</h1>
+            <% if (message) { %>
+                <div id="alertMessage"><%= message %></div>
+            <% } %>
+            
             <form action="/login" method="post">
                 <div class="input-group">
                     <div class="input-field">
@@ -165,6 +169,17 @@
             document.getElementById("Up").style.display = "none";
             document.getElementById("In").style.display = "block";
         }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var alertMessage = document.getElementById('alertMessage');
+            if (alertMessage) {
+                alertMessage.style.display = 'block';
+                alertMessage.style.color='red'; 
+                setTimeout(function() {
+                    alertMessage.style.display = 'none'; 
+                }, 5000);
+            }
+        }); 
     
 </script>
 </body>
