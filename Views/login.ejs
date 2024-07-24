@@ -111,10 +111,9 @@
         
         <div id="In" class="form-box1 ">
             <h1 id="title" style="color: green;">Sign In</h1>
-            <% if (message) { %>
-                <div id="alertMessage"><%= message %></div>
+            <% if (typeof message !== 'undefined') { %>
+                <div id="alertMessage" class="alert alert-danger"><%= message %></div>
             <% } %>
-            
             <form action="/login" method="post">
                 <div class="input-group">
                     <div class="input-field">

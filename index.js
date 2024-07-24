@@ -134,11 +134,23 @@ catch (err) {
 }
 });
 
-app.post("/login", passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: false
-}));
+app.post("/login", (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.render('login', { message: info.message }); // Display error message on login page
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect('/');
+        });
+    })(req, res, next);
+});
+
 
 
 app.post("/search",async(req,res)=>{
