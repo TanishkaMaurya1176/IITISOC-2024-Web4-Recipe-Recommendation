@@ -1,8 +1,15 @@
 
 # Recipe Recommendation Engine
 
-This project is a recipe recommendation program built with a combination of HTML, CSS, JavaScript, and EJS templates for the frontend. The backend is powered by Node.js and Express, along with several other essential packages.
+This project is a recipe recommendation program built with a combination of HTML, CSS, JavaScript, and EJS templates for the frontend. The backend is powered by Node.js , Express, pg , body-parser, dotenv, bcrypt and express-session.
 
+## Website
+
+Link for the deployed version of website 
+
+```bash
+  https://iitisoc-2024-web4-recipe-recommendation.onrender.com
+```
 
 
 ## Features
@@ -93,6 +100,16 @@ IITISOC-2024-Web4-Recipe-Recommendation
 
 - **express-session:** Middleware to manage user sessions.
 
+ ## Screenshots
+
+#### Mobile view
+
+<img src="https://github.com/user-attachments/assets/07bf5758-0e4a-4a28-a946-cebd1038bd58" alt="Mobile-view" width="300" height="700"/>
+
+
+#### Desktop view
+
+<img width="1440" alt="Desktop view" src="https://github.com/user-attachments/assets/379d523a-c30e-45a2-bfbd-68f0e73ecbbf">
 
 ## Installation
 
@@ -131,13 +148,6 @@ npm start
 ```
 6. Open your browser and navigate to http://localhost:3000 to view the application.
     
-## Deployment
-
-To deploy this project run
-
-```bash
-  https://iitisoc-2024-web4-recipe-recommendation.onrender.com
-```
 
 ## API Reference
 
@@ -173,6 +183,9 @@ To deploy this project run
 | :-------- | :-------------------------------- |
 | `email`      | **Required**. Fetches the email of the user.|
 | `password`      | **Required**. Fetches the password of the user. |
+
+
+
 
 
 
