@@ -4,6 +4,9 @@ import pg from "pg";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from 'express-session';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+
 dotenv.config();
 
 const app= express();
@@ -40,15 +43,61 @@ app.use(session({
     secret:"TOPSECRET",
     resave:false,
     saveUninitialized:true,
-    cookie:{ secure: false }
+    cookie: { secure: false, maxAge: 30 * 24 * 60 * 60 * 1000 }
   }));
 
-  const isAuthenticated = (req, res, next) => {
-    if (req.session.user) {
-      return next();
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  passport.use(new LocalStrategy({ usernameField: 'email' },
+    async (email, password, done) => {
+        try {
+            const result = await db.query("SELECT * FROM users WHERE email=$1", [email]);
+            if (result.rows.length > 0) {
+                const user = result.rows[0];
+                const hashedPassword = user.password;
+                bcrypt.compare(password, hashedPassword, (err, isMatch) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    if (isMatch) {
+                        return done(null, user);
+                    } else {
+                        return done(null, false, { message: 'Incorrect password.' });
+                    }
+                });
+            } else {
+                return done(null, false, { message: 'User not found.' });
+            }
+        } catch (err) {
+            return done(err);
+        }
+    }
+));
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const result = await db.query("SELECT * FROM users WHERE id=$1", [id]);
+        if (result.rows.length > 0) {
+            done(null, result.rows[0]);
+        } else {
+            done(null, false);
+        }
+    } catch (err) {
+        done(err);
+    }
+});
+
+const isAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
     }
     res.redirect('/login');
-  };
+};
 
 app.get("/",(req,res)=>{
     res.render('Home');
@@ -75,8 +124,7 @@ try {
                 console.log(result);
                 const inserted=await db.query("SELECT * FROM users WHERE email=$1",[email]);
                 const user=inserted.rows[0];
-                req.session.user=inserted.rows[0];
-                res.render('Home');
+                res.redirect('/login');
         }          
     });
 } 
@@ -86,35 +134,11 @@ catch (err) {
 }
 });
 
-app.post("/login",async(req,res)=>{
-    const email=req.body.email;
-    const password=req.body.password;
-try {
-    const result=await db.query("SELECT * FROM users WHERE email=$1",[email]);
-    if(result.rows.length>0){
-        const user=result.rows[0];
-        const HashedPassword=user.password;
-        bcrypt.compare(password,HashedPassword,(err,Result)=>{
-           if(err){
-            console.log("Error comparing passwords");
-           } else{
-            if(Result){
-                req.session.user=result.rows[0];
-                console.log(result.rows[0]);
-                res.render('Home');
-            }else{
-                res.send("Incorrect Password");
-            }
-           }
-        })
-    }
-    else{
-        res.send("User not found");
-    }
-} catch (err) {
-    console.log(err);
-}
-})
+app.post("/login", passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: false
+}));
 
 
 app.post("/search",async(req,res)=>{
@@ -173,8 +197,8 @@ app.post("/view_Recipe", isAuthenticated,async(req,res)=>{
         );
             const item=result.rows[0];
             console.log(result.rows[0]);
-            const wishlistResult = await db.query("SELECT * FROM saved WHERE recipe_id = $1 AND user_id = $2;", [id,req.session.user.id]);
-            const cartResult= await db.query("SELECT * FROM cart WHERE recipe_id = $1 AND user_id = $2;", [id,req.session.user.id]);
+            const wishlistResult = await db.query("SELECT * FROM saved WHERE recipe_id = $1 AND user_id = $2;", [id,req.user.id]);
+            const cartResult= await db.query("SELECT * FROM cart WHERE recipe_id = $1 AND user_id = $2;", [id,req.user.id]);
             const isLiked = wishlistResult.rowCount > 0; 
             const inCart = cartResult.rowCount > 0; 
         
@@ -195,9 +219,9 @@ app.post("/toggle_like", isAuthenticated, async (req, res) => {
     const { recipeId, isLiked } = req.body;
 try{
     if (isLiked) {
-        await db.query("DELETE FROM saved WHERE recipe_id = $1 AND user_id = $2;", [recipeId,req.session.user.id]);
+        await db.query("DELETE FROM saved WHERE recipe_id = $1 AND user_id = $2;", [recipeId,req.user.id]);
     } else {
-        await db.query("INSERT INTO saved (recipe_id,user_id) VALUES ($1,$2);", [recipeId,req.session.user.id]);
+        await db.query("INSERT INTO saved (recipe_id,user_id) VALUES ($1,$2);", [recipeId,req.user.id]);
     }
     res.sendStatus(200);
 } catch(err){
@@ -208,7 +232,7 @@ try{
   
   app.post("/wishlist", isAuthenticated, async (req, res) => {
     try{
-    const result = await db.query("SELECT * FROM saved INNER JOIN recipes ON saved.recipe_id = recipes.id WHERE saved.user_id = $1;", [req.session.user.id]);
+    const result = await db.query("SELECT * FROM saved INNER JOIN recipes ON saved.recipe_id = recipes.id WHERE saved.user_id = $1;", [req.user.id]);
     const recipes = result.rows;
     res.render('Wishlist', { saved_recipes: recipes });
     }
@@ -221,9 +245,9 @@ try{
     const { recipeId, inCart } = req.body;
 try{
     if (inCart) {
-        await db.query("DELETE FROM cart WHERE recipe_id = $1 AND user_id=$2;", [recipeId,req.session.user.id]);
+        await db.query("DELETE FROM cart WHERE recipe_id = $1 AND user_id=$2;", [recipeId,req.user.id]);
     } else {
-        await db.query("INSERT INTO cart (recipe_id,user_id) VALUES ($1,$2);", [recipeId,req.session.user.id]);
+        await db.query("INSERT INTO cart (recipe_id,user_id) VALUES ($1,$2);", [recipeId,req.user.id]);
     }
     res.sendStatus(200);
 }catch(err){
@@ -234,7 +258,7 @@ try{
 
   app.post("/cart", isAuthenticated, async (req, res) => {
     try{
-    const result = await db.query("SELECT * FROM cart INNER JOIN recipes ON cart.recipe_id = recipes.id WHERE cart.user_id=$1;",[req.session.user.id]);
+    const result = await db.query("SELECT * FROM cart INNER JOIN recipes ON cart.recipe_id = recipes.id WHERE cart.user_id=$1;",[req.user.id]);
     const recipes = result.rows;
     res.render('Cart', { cart_recipes: recipes });
     }catch(err){
