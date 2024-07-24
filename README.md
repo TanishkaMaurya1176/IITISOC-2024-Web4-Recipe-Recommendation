@@ -1,7 +1,7 @@
 
 # Recipe Recommendation Engine
 
-This project is a recipe recommendation program built with a combination of HTML, CSS, JavaScript, and EJS templates for the frontend. The backend is powered by Node.js , Express, pg , body-parser, dotenv, bcrypt and express-session.
+This project is a recipe recommendation program built with a combination of HTML, CSS, JavaScript, and EJS templates for the frontend. The backend is powered by Node.js , Express, pg , body-parser, dotenv, bcrypt, express-session, passport and passport-local.
 
 ## Website
 
@@ -99,7 +99,11 @@ IITISOC-2024-Web4-Recipe-Recommendation
 - **bcrypt:** Library for hashing passwords.
 
 - **express-session:** Middleware to manage user sessions.
+  
+- **passport:** Middleware to authenticate login requests.
 
+- **passport-local:** Passport-Local provides straightforward implementation of username and password authentication, ensuring secure and customizable user login management.
+  
  ## Screenshots
 
 #### Mobile view
