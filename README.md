@@ -139,4 +139,40 @@ To deploy this project run
   https://iitisoc-2024-web4-recipe-recommendation.onrender.com
 ```
 
+## API Reference
+
+#### Save an item
+
+```http
+  POST /toggle_like
+```
+
+| Parameter | Description |
+| :-------- | :------------------------- |
+| `recipeId` | **Required**. Id of item to fetch |
+| `isLiked`  | **Required**. Whether item is already liked or not |
+
+#### POST recipe
+
+```http
+  POST /view_Recipe
+```
+
+| Parameter | Description                       |
+| :-------- | :-------------------------------- |
+| `id`      | **Required**. Id of item to fetch |
+| `isShared`      | **Required**. By default its false, on sharing it becomes true |
+
+#### POST Login details 
+
+```http
+  POST /login
+```
+
+| Parameter | Description                       |
+| :-------- | :-------------------------------- |
+| `email`      | **Required**. Fetches the email of the user.|
+| `password`      | **Required**. Fetches the password of the user. |
+
+
 
