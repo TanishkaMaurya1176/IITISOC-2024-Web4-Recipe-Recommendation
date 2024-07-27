@@ -115,6 +115,13 @@ IITISOC-2024-Web4-Recipe-Recommendation
 
 <img width="1440" alt="Desktop view" src="https://github.com/user-attachments/assets/379d523a-c30e-45a2-bfbd-68f0e73ecbbf">
 
+## Demo
+
+https://github.com/user-attachments/assets/aa3ae414-5183-488a-9836-394b76fbafd0
+
+
+
+
 ## Installation
 
 1. Clone the Repository:
